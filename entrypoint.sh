@@ -18,7 +18,7 @@ yum-builddep -y $INPUTS_SPEC_FILE
 cp -r * ~/rpmbuild/SOURCES/.
 
 # Build the RPM and SRPM files.
-rpmbuild -ba $INPUTS_SPEC_FILE
+rpmbuild --undefine=_disable_source_fetch -ba $INPUTS_SPEC_FILE
 
 if [ ! -z "$INPUTS_GPG_KEY" ] ; then
     echo "Signing the RPMs."
