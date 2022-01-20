@@ -42,15 +42,15 @@ runs:
     - id: rpm-package-action
       shell: bash
       run: |
-        INPUTS_PATH="${{ inputs.path }}"
-        INPUTS_SPEC="${{ inputs.spec }}"
-        INPUTS_DISTRO="${{ inputs.distro }}"
-        INPUTS_OUTPUT_DIR="${{ inputs.output-dir }}"
-        INPUTS_GPG_KEY="${{ inputs.gpg-key }}"
-        INPUTS_GPG_NAME="${{ inputs.gpg-name }}"
-        INPUTS_DOCKERFILE_SLUG="${{ inputs.dockerfile-slug }}"
-        INPUTS_DOCKERFILE_PATH="${{ inputs.dockerfile-path }}"
-        INPUTS_DOCKER_ACCESS_TOKEN="${{ inputs.dockerfile-access-token }}"
+        INPUTS_PATH="${{ inputs.path }}" \
+        INPUTS_SPEC="${{ inputs.spec }}" \
+        INPUTS_DISTRO="${{ inputs.distro }}" \
+        INPUTS_OUTPUT_DIR="${{ inputs.output-dir }}" \
+        INPUTS_GPG_KEY="${{ inputs.gpg-key }}" \
+        INPUTS_GPG_NAME="${{ inputs.gpg-name }}" \
+        INPUTS_DOCKERFILE_SLUG="${{ inputs.dockerfile-slug }}" \
+        INPUTS_DOCKERFILE_PATH="${{ inputs.dockerfile-path }}" \
+        INPUTS_DOCKER_ACCESS_TOKEN="${{ inputs.dockerfile-access-token }}" \
         ${{ github.action_path }}/action.sh
 
 branding:
