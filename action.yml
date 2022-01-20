@@ -1,0 +1,58 @@
+# SPDX-FileCopyrightText: 2022 Comcast Cable Communications Management, LLC
+# SPDX-License-Identifier: Apache-2.0
+---
+
+name: Package and sign RPM
+description: Package and sign an RPM for the specified distribution.
+
+inputs:
+  path:
+    description: 'The path to the directory containing all the files needed to build the RPM.'
+    required: true
+  spec:
+    description: 'The spec file to build.  The spec file must be located in the path.'
+    required: true
+  distro:
+    description: 'The distribution to build on and target, or "custom" to provide your own dockerfile.'
+    required: false
+    default: custom
+  output-dir:
+    description: 'The destination directory to place the RPM and SRPM files.'
+    required: false
+    default: output
+  gpg-key:
+    description: 'The GPG key used to sign the RPM. (requires gpg-name)'
+    required: false
+  gpg-name:
+    description: 'The GPG name used to sign the RPM. (requires gpg-key)'
+    required: false
+  dockerfile-slug:
+    description: 'The github owner/repo where the dockerfile can be found.  Defaults to looking in the present repo unless specified.'
+    required: false
+  dockerfile-path:
+    description: 'The path from the repo to the file including the filename.  Used and required if "distro" is set to "custom".'
+    required: false
+  dockerfile-access-token:
+    description: 'The access token if needed to download the dockerfile from a protected repo.'
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - id: rpm-package-action
+      shell: bash
+      run: |
+        INPUTS_PATH="${{ inputs.path }}"
+        INPUTS_SPEC="${{ inputs.spec }}"
+        INPUTS_DISTRO="${{ inputs.distro }}"
+        INPUTS_OUTPUT_DIR="${{ inputs.output-dir }}"
+        INPUTS_GPG_KEY="${{ inputs.gpg-key }}"
+        INPUTS_GPG_NAME="${{ inputs.gpg-name }}"
+        INPUTS_DOCKERFILE_SLUG="${{ inputs.dockerfile-slug }}"
+        INPUTS_DOCKERFILE_PATH="${{ inputs.dockerfile-path }}"
+        INPUTS_DOCKER_ACCESS_TOKEN="${{ inputs.dockerfile-access-token }}"
+        ${{ github.action_path }}/action.sh
+
+branding:
+  icon: package
+  color: gray-dark
