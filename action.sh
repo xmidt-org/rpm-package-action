@@ -17,62 +17,77 @@ YELLOW="${SWITCH}1;33m"
 usage() {
     echo -e "Usage: $0 requres the following env vars to be set:"
     if [[ -z "$GITHUB_WORKSPACE" ]]; then
-        echo -e "    ${RED}GITHUB_WORKSPACE            (required) missing${NORMAL}"
+        echo -e "    ${RED}GITHUB_WORKSPACE                 (required) missing${NORMAL}"
     else
-        echo -e "    GITHUB_WORKSPACE            (required) ${CYAN}present${NORMAL} $GITHUB_WORKSPACE"
+        echo -e "    GITHUB_WORKSPACE                 (required) ${CYAN}present${NORMAL} $GITHUB_WORKSPACE"
     fi
 
     if [[ -z "$GITHUB_ACTION_PATH" ]]; then
-        echo -e "    ${RED}GITHUB_ACTION_PATH          (required) missing${NORMAL}"
+        echo -e "    ${RED}GITHUB_ACTION_PATH               (required) missing${NORMAL}"
     else
-        echo -e "    GITHUB_ACTION_PATH          (required) ${CYAN}present${NORMAL} $GITHUB_ACTION_PATH"
+        echo -e "    GITHUB_ACTION_PATH               (required) ${CYAN}present${NORMAL} $GITHUB_ACTION_PATH"
     fi
 
     if [[ -z "$INPUTS_PATH" ]]; then
-        echo -e "    ${RED}INPUTS_PATH                 (required) missing${NORMAL}"
+        echo -e "    ${RED}INPUTS_PATH                      (required) missing${NORMAL}"
     else
-        echo -e "    INPUTS_PATH                 (required) ${CYAN}present${NORMAL} $INPUTS_PATH"
+        echo -e "    INPUTS_PATH                      (required) ${CYAN}present${NORMAL} $INPUTS_PATH"
     fi
 
     if [[ -z "$INPUTS_SPEC" ]]; then
-        echo -e "    ${RED}INPUTS_SPEC                 (required) missing${NORMAL}"
+        echo -e "    ${RED}INPUTS_SPEC                      (required) missing${NORMAL}"
     else
-        echo -e "    INPUTS_SPEC                 (required) ${CYAN}present${NORMAL} $INPUTS_SPEC"
+        echo -e "    INPUTS_SPEC                      (required) ${CYAN}present${NORMAL} $INPUTS_SPEC"
     fi
     if [[ -z "$INPUTS_DISTRO" ]]; then
-        echo -e "    ${RED}INPUTS_DISTRO               (required) missing${NORMAL}"
+        echo -e "    ${RED}INPUTS_DISTRO                    (required) missing${NORMAL}"
     else
-        echo -e "    INPUTS_DISTRO               (required) ${CYAN}present${NORMAL} $INPUTS_DISTRO"
+        echo -e "    INPUTS_DISTRO                    (required) ${CYAN}present${NORMAL} $INPUTS_DISTRO"
     fi
     if [[ -z "$INPUTS_OUTPUT_DIR" ]]; then
-        echo -e "    ${RED}INPUTS_OUTPUT_DIR           (required) missing${NORMAL}"
+        echo -e "    ${RED}INPUTS_OUTPUT_DIR                (required) missing${NORMAL}"
     else
-        echo -e "    INPUTS_OUTPUT_DIR           (required) ${CYAN}present${NORMAL} $INPUTS_OUTPUT_DIR"
+        echo -e "    INPUTS_OUTPUT_DIR                (required) ${CYAN}present${NORMAL} $INPUTS_OUTPUT_DIR"
     fi
     if [[ -z "$INPUTS_GPG_KEY" ]]; then
-        echo -e "    INPUTS_GPG_KEY              (optional) ${YELLOW}missing${NORMAL}"
+        echo -e "    INPUTS_GPG_KEY                   (optional) ${YELLOW}missing${NORMAL}"
     else
-        echo -e "    INPUTS_GPG_KEY              (optional) ${CYAN}present${NORMAL}"
+        echo -e "    INPUTS_GPG_KEY                   (optional) ${CYAN}present${NORMAL}"
     fi
     if [[ -z "$INPUTS_GPG_NAME" ]]; then
-        echo -e "    INPUTS_GPG_NAME             (optional) ${YELLOW}missing${NORMAL}"
+        echo -e "    INPUTS_GPG_NAME                  (optional) ${YELLOW}missing${NORMAL}"
     else
-        echo -e "    INPUTS_GPG_NAME             (optional) ${CYAN}present${NORMAL}"
+        echo -e "    INPUTS_GPG_NAME                  (optional) ${CYAN}present${NORMAL}"
     fi
     if [[ -z "$INPUTS_DOCKERFILE_SLUG" ]]; then
-        echo -e "    INPUTS_DOCKERFILE_SLUG      (optional) ${YELLOW}missing${NORMAL}"
+        echo -e "    INPUTS_DOCKERFILE_SLUG           (optional) ${YELLOW}missing${NORMAL}"
     else
-        echo -e "    INPUTS_DOCKERFILE_SLUG      (optional) ${CYAN}present${NORMAL} $INPUTS_DOCKERFILE_SLUG"
+        echo -e "    INPUTS_DOCKERFILE_SLUG           (optional) ${CYAN}present${NORMAL} $INPUTS_DOCKERFILE_SLUG"
     fi
     if [[ -z "$INPUTS_DOCKERFILE_PATH" ]]; then
-        echo -e "    INPUTS_DOCKERFILE_PATH      (optional) ${YELLOW}missing${NORMAL}"
+        echo -e "    INPUTS_DOCKERFILE_PATH           (optional) ${YELLOW}missing${NORMAL}"
     else
-        echo -e "    INPUTS_DOCKERFILE_PATH      (optional) ${CYAN}present${NORMAL} $INPUTS_DOCKERFILE_PATH"
+        echo -e "    INPUTS_DOCKERFILE_PATH           (optional) ${CYAN}present${NORMAL} $INPUTS_DOCKERFILE_PATH"
     fi
     if [[ -z "$INPUTS_DOCKER_ACCESS_TOKEN" ]]; then
-        echo -e "    INPUTS_DOCKER_ACCESS_TOKEN  (optional) ${YELLOW}missing${NORMAL}"
+        echo -e "    INPUTS_DOCKER_ACCESS_TOKEN       (optional) ${YELLOW}missing${NORMAL}"
     else
-        echo -e "    INPUTS_DOCKER_ACCESS_TOKEN  (optional) ${CYAN}present${NORMAL}"
+        echo -e "    INPUTS_DOCKER_ACCESS_TOKEN       (optional) ${CYAN}present${NORMAL}"
+    fi
+    if [[ -z "$INPUTS_CONTAINER_REGISTRY_URL" ]]; then
+        echo -e "    INPUTS_CONTAINER_REGISTRY_URL    (optional) ${YELLOW}missing${NORMAL}"
+    else
+        echo -e "    INPUTS_CONTAINER_REGISTRY_URL    (optional) ${CYAN}present${NORMAL} $INPUTS_CONTAINER_REGISTRY_URL"
+    fi
+    if [[ -z "$INPUTS_CONTAINER_REGISTRY_USER" ]]; then
+        echo -e "    INPUTS_CONTAINER_REGISTRY_USER   (optional) ${YELLOW}missing${NORMAL}"
+    else
+        echo -e "    INPUTS_CONTAINER_REGISTRY_USER   (optional) ${CYAN}present${NORMAL} $INPUTS_CONTAINER_REGISTRY_USER"
+    fi
+    if [[ -z "$INPUTS_CONTAINER_REGISTRY_TOKEN" ]]; then
+        echo -e "    INPUTS_CONTAINER_REGISTRY_TOKEN  (optional) ${YELLOW}missing${NORMAL}"
+    else
+        echo -e "    INPUTS_CONTAINER_REGISTRY_TOKEN  (optional) ${CYAN}present${NORMAL}"
     fi
 }
 
@@ -152,6 +167,18 @@ if [[ -z "$INPUTS_GPG_KEY" && ! -z "$INPUTS_GPG_NAME" ]]; then
 fi
 
 docker_name="rpm-package-action:builder-$INPUTS_DISTRO"
+
+if [[ ! -z "$INPUTS_CONTAINER_REGISTRY_URL" || \
+      ! -z "$INPUTS_CONTAINER_REGISTRY_USER" || \
+      ! -z "$INPUTS_CONTAINER_REGISTRY_TOKEN" ]]; then
+
+    if [[ ! -z "$INPUTS_CONTAINER_REGISTRY_USER" ]]; then
+        echo $INPUTS_CONTAINER_REGISTRY_TOKEN | docker login $INPUTS_CONTAINER_REGISTRY_URL -u $INPUTS_CONTAINER_REGISTRY_USER --password-stdin
+    else
+        echo $INPUTS_CONTAINER_REGISTRY_TOKEN | docker login $INPUTS_CONTAINER_REGISTRY_URL --password-stdin
+    fi
+
+fi
 
 echo -e "${CYAN}-- Building the docker image -----${NORMAL}"
 # Build the docker image

@@ -35,6 +35,15 @@ inputs:
   dockerfile-access-token:
     description: 'The access token if needed to download the dockerfile from a protected repo.'
     required: false
+  container-registry-url:
+    description: 'If specified, the non-dockerhub container URL.  For Github Containers specify "ghcr.io"'
+    required: false
+  container-registry-user:
+    description: 'The username to login to the container registry with if present.'
+    required: false
+  container-registry-token:
+    description: 'The token to use as the password to the container registry with if present.'
+    required: false
 
 runs:
   using: "composite"
@@ -51,6 +60,9 @@ runs:
         INPUTS_DOCKERFILE_SLUG="${{ inputs.dockerfile-slug }}" \
         INPUTS_DOCKERFILE_PATH="${{ inputs.dockerfile-path }}" \
         INPUTS_DOCKER_ACCESS_TOKEN="${{ inputs.dockerfile-access-token }}" \
+        INPUTS_CONTAINER_REGISTRY_URL="${{ inputs.container-registery-url }}" \
+        INPUTS_CONTAINER_REGISTRY_USER="${{ inputs.container-registery-user }}" \
+        INPUTS_CONTAINER_REGISTRY_TOKEN="${{ inputs.container-registery-token }}" \
         ${{ github.action_path }}/action.sh
 
 branding:

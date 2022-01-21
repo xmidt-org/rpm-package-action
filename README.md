@@ -16,6 +16,9 @@ for different platforms.
 - `dockerfile-slug`: The github owner/repo where the dockerfile can be found.  Defaults to looking in the present repo unless specified. [**optional**]
 - `dockerfile-path`: The path from the repo to the file including the filename.  [**optional, required if** `distro`**=**`custom`]
 - `dockerfile-access-token`: The access token if needed to download the dockerfile from a protected repo. [**optional**]
+- `container-registry-url`: If specified, the non-dockerhub container URL.  For Github Containers specify 'ghcr.io' [**optional**]
+- `container-registry-user`: The username to login to the container registry with if present. [**optional**]
+- `container-registry-token`: The token to use as the password to the container registry with if present. [[**optional**]
 
 ### Outputs
 
