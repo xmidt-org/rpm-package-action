@@ -19,6 +19,7 @@ for different platforms.
 - `container-registry-url`: If specified, the non-dockerhub container URL.  For Github Containers specify 'ghcr.io' [**optional**]
 - `container-registry-user`: The username to login to the container registry with if present. [**optional**]
 - `container-registry-token`: The token to use as the password to the container registry with if present. [[**optional**]
+- `build-host`: The build host to specify for inclusion into the RPM information. [[**optional**]]
 
 ### Outputs
 

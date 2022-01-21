@@ -17,6 +17,12 @@ yum-builddep -y $INPUTS_SPEC_FILE
 # Copy the directory of files into the source location so they are ready for use.
 cp -r * ~/rpmbuild/SOURCES/.
 
+touch ~/.rpmmacros
+
+if [ ! -z "$INPUTS_BUILD_HOST" ]; then
+    echo "%_buildhost $INPUTS_BUILD_HOST" >> ~/.rpmmacros
+fi
+
 # Build the RPM and SRPM files.
 rpmbuild --undefine=_disable_source_fetch -ba $INPUTS_SPEC_FILE
 
@@ -31,7 +37,7 @@ if [ ! -z "$INPUTS_GPG_KEY" ] ; then
     export GPG_TTY=""
 
     # Configure the .rpmmacro file for signing.
-    echo "%_signature gpg"                   > ~/.rpmmacros
+    echo "%_signature gpg"                  >> ~/.rpmmacros
     echo "%_gpg_path  ~/.gnupg"             >> ~/.rpmmacros
     echo "%_gpg_name  ${INPUTS_GPG_NAME}"   >> ~/.rpmmacros
     echo "%_gpg       /usr/bin/gpg"         >> ~/.rpmmacros

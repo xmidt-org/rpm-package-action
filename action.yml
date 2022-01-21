@@ -20,6 +20,9 @@ inputs:
     description: 'The destination directory to place the RPM and SRPM files.'
     required: false
     default: output
+  build-host:
+    description: 'The build host to specify for inclusion into the RPM information.'
+    required: false
   gpg-key:
     description: 'The GPG key used to sign the RPM. (requires gpg-name)'
     required: false
@@ -63,6 +66,7 @@ runs:
         INPUTS_CONTAINER_REGISTRY_URL="${{ inputs.container-registry-url }}" \
         INPUTS_CONTAINER_REGISTRY_USER="${{ inputs.container-registry-user }}" \
         INPUTS_CONTAINER_REGISTRY_TOKEN="${{ inputs.container-registry-token }}" \
+        INPUTS_BUILD_HOST="${{ inputs.build-host }}" \
         ${{ github.action_path }}/action.sh
 
 branding:
