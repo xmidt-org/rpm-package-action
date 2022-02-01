@@ -94,10 +94,10 @@ usage() {
     else
         echo -e "    INPUTS_BUILD_HOST                (optional) ${CYAN}present${NORMAL} $INPUTS_BUILD_HOST"
     fi
-    if [[ -z "$INPUTS_ARTIFACT_TOKEN" ]]; then
-        echo -e "    INPUTS_ARTIFACT_TOKEN            (optional) ${YELLOW}missing${NORMAL}"
+    if [[ -z "$INPUTS_ARTIFACTS_TOKEN" ]]; then
+        echo -e "    INPUTS_ARTIFACTS_TOKEN           (optional) ${YELLOW}missing${NORMAL}"
     else
-        echo -e "    INPUTS_ARTIFACT_TOKEN            (optional) ${CYAN}present${NORMAL}"
+        echo -e "    INPUTS_ARTIFACTS_TOKEN           (optional) ${CYAN}present${NORMAL}"
     fi
 }
 
@@ -206,6 +206,6 @@ docker run --name thing \
     -e INPUTS_RPM_PATH="$INPUTS_PATH" \
     -e INPUTS_SPEC_FILE="$INPUTS_SPEC" \
     -e INPUTS_BUILD_HOST="$INPUTS_BUILD_HOST" \
-    -t INPUTS_ARTIFACT_TOKEN="$INPUTS_ARTIFACT_TOKEN" \
+    -e INPUTS_ARTIFACTS_TOKEN="$INPUTS_ARTIFACTS_TOKEN" \
     -v "$GITHUB_WORKSPACE/$INPUTS_PATH:/mnt/repo" \
     $docker_name

@@ -19,9 +19,9 @@ cp -r * ~/rpmbuild/SOURCES/.
 
 touch ~/.rpmmacros
 
-if [ ! -z "$INPUTS_ARTIFACT_TOKEN" ]; then
+if [ ! -z "$INPUTS_ARTIFACTS_TOKEN" ]; then
     # Enable checking out potentially private github repositories too
-    git config --global url."https://$INPUTS_ARTIFACT_TOKEN:x-oauth-basic@github.com".insteadOf "https://github.com"
+    git config --global url."https://$INPUTS_ARTIFACTS_TOKEN:x-oauth-basic@github.com".insteadOf "https://github.com"
 fi
 
 if [ ! -z "$INPUTS_BUILD_HOST" ]; then
