@@ -47,6 +47,9 @@ inputs:
   container-registry-token:
     description: 'The token to use as the password to the container registry with if present.'
     required: false
+  artifacts-token:
+    description: 'The token needed to fetch artifacts from private github repositories.'
+    required: false
 
 runs:
   using: "composite"
@@ -67,6 +70,7 @@ runs:
         INPUTS_CONTAINER_REGISTRY_USER="${{ inputs.container-registry-user }}" \
         INPUTS_CONTAINER_REGISTRY_TOKEN="${{ inputs.container-registry-token }}" \
         INPUTS_BUILD_HOST="${{ inputs.build-host }}" \
+        INPUTS_ARTIFACTS_TOKEN="${{ inputs.artifacts-token }}" \
         ${{ github.action_path }}/action.sh
 
 branding:
