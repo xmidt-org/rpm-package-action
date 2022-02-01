@@ -11,6 +11,7 @@ for different platforms.
 - `spec`: The spec file to build.  The spec file must be located in the `path` above. [**required**]
 - `distro`: The distribution to build on and target, or `custom` to provide your own dockerfile.  The docker files are found in the `distros` repo and this value is the filename suffix. [**optional, default:** `custom`]
 - `output-dir`: The destination directory to place the RPM and SRPM files. [**optional, default:** `output`]
+- `build-host`: The build host to specify for inclusion into the RPM information. [**optional**]
 - `gpg-key`: The GPG key used to sign the RPM if you want to sign your RPM. [**optional, requires:** `gpg-name`]
 - `gpg-name`: The GPG key name used to sign the RPM. [**optional, requires:** `gpg-key`]
 - `dockerfile-slug`: The github owner/repo where the dockerfile can be found.  Defaults to looking in the present repo unless specified. [**optional**]
@@ -18,8 +19,8 @@ for different platforms.
 - `dockerfile-access-token`: The access token if needed to download the dockerfile from a protected repo. [**optional**]
 - `container-registry-url`: If specified, the non-dockerhub container URL.  For Github Containers specify 'ghcr.io' [**optional**]
 - `container-registry-user`: The username to login to the container registry with if present. [**optional**]
-- `container-registry-token`: The token to use as the password to the container registry with if present. [[**optional**]
-- `build-host`: The build host to specify for inclusion into the RPM information. [[**optional**]]
+- `container-registry-token`: The token to use as the password to the container registry with if present. [**optional**]
+- `artifacts-token`: The token to use to download private git repos or release objects if present. [**optional**]
 
 ### Outputs
 
