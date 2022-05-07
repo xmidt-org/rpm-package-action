@@ -23,8 +23,14 @@ if [ ! -z "$INPUTS_ARTIFACTS_TOKEN" ]; then
     # Enable checking out potentially private github repositories too
     git config --global url."https://$INPUTS_ARTIFACTS_TOKEN:x-oauth-basic@github.com".insteadOf "https://github.com"
 
-    echo "$INPUTS_ARTIFACTS_TOKEN"       >  ~/.gh_token
-    echo "%__urlhelpercmd ~/.gh_curl.sh" >> ~/.rpmmacros
+    echo "$INPUTS_ARTIFACTS_TOKEN" >  ~/.gh_token
+
+    # Add all the standard fields in case they aren't present.
+    echo "%__urlhelpercmd         $HOME/.gh_curl.sh"                                                                        >> ~/.rpmmacros
+    echo "%__urlhelperopts        --silent --show-error --fail --globoff --location -o"                                     >> ~/.rpmmacros
+    echo "%__urlhelper_proxyopts  %{?_httpproxy:--proxy %{_httpproxy}%{?_httpport::%{_httpport}}}%{!?_httpproxy:%{nil}}"    >> ~/.rpmmacros
+    # This is the one field the tools will look for
+    echo "%_urlhelper             %{__urlhelpercmd} %{?__urlhelper_localopts} %{?__urlhelper_proxyopts} %{__urlhelperopts}" >> ~/.rpmmacros
 
     cat <<EOF > ~/.gh_curl.sh
 #!/bin/bash
@@ -43,6 +49,7 @@ url_match=$(echo ${url::19} | tr '[:upper:]' '[:lower:]')
 
 # Only add the credentials if we are requesting from github.com
 if [[ $url_match == "https://github.com/" ]] ; then
+    echo "gh_curl.sh: Adding authorization header."
     curl -H "Authorization: token ${token}" ${@:1}
 else
     curl ${@:1}
