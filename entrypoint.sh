@@ -32,7 +32,8 @@ if [ ! -z "$INPUTS_ARTIFACTS_TOKEN" ]; then
     # This is the one field the tools will look for
     echo "%_urlhelper             %{__urlhelpercmd} %{?__urlhelper_localopts} %{?__urlhelper_proxyopts} %{__urlhelperopts}" >> ~/.rpmmacros
 
-    cat <<EOF > ~/.gh_curl.sh
+    # 'EOF' makes sure not to expand any variables/etc.
+    cat <<'EOF' > ~/.gh_curl.sh
 #!/bin/bash
 
 args=("$@")
