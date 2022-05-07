@@ -22,6 +22,34 @@ touch ~/.rpmmacros
 if [ ! -z "$INPUTS_ARTIFACTS_TOKEN" ]; then
     # Enable checking out potentially private github repositories too
     git config --global url."https://$INPUTS_ARTIFACTS_TOKEN:x-oauth-basic@github.com".insteadOf "https://github.com"
+
+    echo "$INPUTS_ARTIFACTS_TOKEN"       >  ~/.gh_token
+    echo "%__urlhelpercmd ~/.gh_curl.sh" >> ~/.rpmmacros
+
+    cat <<EOF > ~/.gh_curl.sh
+#!/bin/bash
+
+args=("$@")
+
+arg_count=${#args[@]}
+url_index=$((arg_count - 1))
+url=${args[${url_index}]}
+
+token=`cat ~/.gh_token`
+
+# URLS are not case sensative, convert to all lowercase
+# the string 'https://github.comcast.com/' is 19 characters long.
+url_match=$(echo ${url::19} | tr '[:upper:]' '[:lower:]')
+
+# Only add the credentials if we are requesting from github.com
+if [[ $url_match == "https://github.com/" ]] ; then
+    curl -H "Authorization: token ${token}" ${@:1}
+else
+    curl ${@:1}
+fi
+EOF
+    chmod uga+x ~/.gh_curl.sh
+
 fi
 
 if [ ! -z "$INPUTS_BUILD_HOST" ]; then
