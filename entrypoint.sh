@@ -42,7 +42,7 @@ arg_count=${#args[@]}
 url_index=$((arg_count - 1))
 url=${args[${url_index}]}
 
-token=`cat ~/.gh_token`
+token=$(cat ~/.gh_token)
 
 # URLS are not case sensative, convert to all lowercase
 # the string 'https://github.comcast.com/' is 19 characters long.
@@ -65,7 +65,11 @@ if [ ! -z "$INPUTS_BUILD_HOST" ]; then
 fi
 
 # Build the RPM and SRPM files.
-rpmbuild --undefine=_disable_source_fetch -ba $INPUTS_SPEC_FILE
+if [ ! -z "$INPUTS_TARGET_PROCESSOR_ARCH" ] ; then
+    rpmbuild --undefine=_disable_source_fetch --target $INPUTS_TARGET_PROCESSOR_ARCH -ba $INPUTS_SPEC_FILE
+else
+    rpmbuild --undefine=_disable_source_fetch -ba $INPUTS_SPEC_FILE
+fi
 
 if [ ! -z "$INPUTS_GPG_KEY" ] ; then
     echo "Signing the RPMs."
