@@ -94,6 +94,11 @@ usage() {
     else
         echo -e "    INPUTS_BUILD_HOST                (optional) ${CYAN}present${NORMAL} $INPUTS_BUILD_HOST"
     fi
+    if [[ -z "$INPUTS_TARGET_PROCESSOR_ARCH" ]]; then
+        echo -e "    INPUTS_TARGET_PROCESSOR_ARCH     (optional) ${YELLOW}missing${NORMAL}"
+    else
+        echo -e "    INPUTS_TARGET_PROCESSOR_ARCH     (optional) ${CYAN}present${NORMAL} $INPUTS_TARGET_PROCESSOR_ARCH"
+    fi
     if [[ -z "$INPUTS_ARTIFACTS_TOKEN" ]]; then
         echo -e "    INPUTS_ARTIFACTS_TOKEN           (optional) ${YELLOW}missing${NORMAL}"
     else
@@ -207,5 +212,6 @@ docker run --name thing \
     -e INPUTS_SPEC_FILE="$INPUTS_SPEC" \
     -e INPUTS_BUILD_HOST="$INPUTS_BUILD_HOST" \
     -e INPUTS_ARTIFACTS_TOKEN="$INPUTS_ARTIFACTS_TOKEN" \
+    -e INPUTS_TARGET_PROCESSOR_ARCH="$INPUTS_TARGET_PROCESSOR_ARCH" \
     -v "$GITHUB_WORKSPACE/$INPUTS_PATH:/mnt/repo" \
     $docker_name

@@ -6,22 +6,38 @@ name: Package and sign RPM
 description: Package and sign an RPM for the specified distribution.
 
 inputs:
+  #required inputs
   path:
     description: 'The path to the directory containing all the files needed to build the RPM.'
     required: true
   spec:
     description: 'The spec file to build.  The spec file must be located in the path.'
     required: true
+  #optional inputs
+  artifacts-token:
+    description: 'The token needed to fetch artifacts from private github repositories.'
+    required: false
+  build-host:
+    description: 'The build host to specify for inclusion into the RPM information.'
+    required: false
+  container-registry-token:
+    description: 'The token to use as the password to the container registry with if present.'
+    required: false
+  container-registry-url:
+    description: 'If specified, the non-dockerhub container URL.  For Github Containers specify "ghcr.io"'
+    required: false
   distro:
     description: 'The distribution to build on and target, or "custom" to provide your own dockerfile.'
     required: false
     default: custom
-  output-dir:
-    description: 'The destination directory to place the RPM and SRPM files.'
+  dockerfile-access-token:
+    description: 'The access token if needed to download the dockerfile from a protected repo.'
     required: false
-    default: output
-  build-host:
-    description: 'The build host to specify for inclusion into the RPM information.'
+  dockerfile-path:
+    description: 'The path from the repo to the file including the filename.  Used and required if "distro" is set to "custom".'
+    required: false
+  dockerfile-slug:
+    description: 'The github owner/repo where the dockerfile can be found.  Defaults to looking in the present repo unless specified.'
     required: false
   gpg-key:
     description: 'The GPG key used to sign the RPM. (requires gpg-name)'
@@ -29,26 +45,12 @@ inputs:
   gpg-name:
     description: 'The GPG name used to sign the RPM. (requires gpg-key)'
     required: false
-  dockerfile-slug:
-    description: 'The github owner/repo where the dockerfile can be found.  Defaults to looking in the present repo unless specified.'
+  output-dir:
+    description: 'The destination directory to place the RPM and SRPM files.'
     required: false
-  dockerfile-path:
-    description: 'The path from the repo to the file including the filename.  Used and required if "distro" is set to "custom".'
-    required: false
-  dockerfile-access-token:
-    description: 'The access token if needed to download the dockerfile from a protected repo.'
-    required: false
-  container-registry-url:
-    description: 'If specified, the non-dockerhub container URL.  For Github Containers specify "ghcr.io"'
-    required: false
-  container-registry-user:
-    description: 'The username to login to the container registry with if present.'
-    required: false
-  container-registry-token:
-    description: 'The token to use as the password to the container registry with if present.'
-    required: false
-  artifacts-token:
-    description: 'The token needed to fetch artifacts from private github repositories.'
+    default: output
+  target-processor-arch:
+    description: 'The target processor architecture to build the RPM for (e.g. x86_64, aarch64, etc.).'
     required: false
 
 runs:
@@ -57,20 +59,20 @@ runs:
     - id: rpm-package-action
       shell: bash
       run: |
-        INPUTS_PATH="${{ inputs.path }}" \
-        INPUTS_SPEC="${{ inputs.spec }}" \
+        INPUTS_ARTIFACTS_TOKEN="${{ inputs.artifacts-token }}" \
+        INPUTS_BUILD_HOST="${{ inputs.build-host }}" \
+        INPUTS_CONTAINER_REGISTRY_TOKEN="${{ inputs.container-registry-token }}" \
+        INPUTS_CONTAINER_REGISTRY_URL="${{ inputs.container-registry-url }}" \
+        INPUTS_DOCKERFILE_PATH="${{ inputs.dockerfile-path }}" \
+        INPUTS_DOCKERFILE_SLUG="${{ inputs.dockerfile-slug }}" \
+        INPUTS_DOCKER_ACCESS_TOKEN="${{ inputs.dockerfile-access-token }}" \
         INPUTS_DISTRO="${{ inputs.distro }}" \
-        INPUTS_OUTPUT_DIR="${{ inputs.output-dir }}" \
         INPUTS_GPG_KEY="${{ inputs.gpg-key }}" \
         INPUTS_GPG_NAME="${{ inputs.gpg-name }}" \
-        INPUTS_DOCKERFILE_SLUG="${{ inputs.dockerfile-slug }}" \
-        INPUTS_DOCKERFILE_PATH="${{ inputs.dockerfile-path }}" \
-        INPUTS_DOCKER_ACCESS_TOKEN="${{ inputs.dockerfile-access-token }}" \
-        INPUTS_CONTAINER_REGISTRY_URL="${{ inputs.container-registry-url }}" \
-        INPUTS_CONTAINER_REGISTRY_USER="${{ inputs.container-registry-user }}" \
-        INPUTS_CONTAINER_REGISTRY_TOKEN="${{ inputs.container-registry-token }}" \
-        INPUTS_BUILD_HOST="${{ inputs.build-host }}" \
-        INPUTS_ARTIFACTS_TOKEN="${{ inputs.artifacts-token }}" \
+        INPUTS_OUTPUT_DIR="${{ inputs.output-dir }}" \
+        INPUTS_PATH="${{ inputs.path }}" \
+        INPUTS_SPEC="${{ inputs.spec }}" \
+        INPUTS_TARGET_PROCESSOR_ARCH="${{ inputs.target-processor-arch }}"
         ${{ github.action_path }}/action.sh
 
 branding:
