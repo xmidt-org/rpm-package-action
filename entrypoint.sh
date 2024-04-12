@@ -66,7 +66,7 @@ fi
 
 # Build the RPM and SRPM files.
 if [ ! -z "$INPUTS_TARGET_PROCESSOR_ARCH" ] ; then
-    rpmbuild --undefine=_disable_source_fetch --target=$INPUTS_TARGET_PROCESSOR_ARCH -ba $INPUTS_SPEC_FILE
+    rpmbuild --undefine=_disable_source_fetch --target $INPUTS_TARGET_PROCESSOR_ARCH -ba $INPUTS_SPEC_FILE
 else
     rpmbuild --undefine=_disable_source_fetch -ba $INPUTS_SPEC_FILE
 fi
