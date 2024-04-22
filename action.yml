@@ -25,7 +25,7 @@ inputs:
     required: false
   container-registry-user:
     description: 'The username to login to the container registry with if present.'
-    required: false    
+    required: false
   container-registry-url:
     description: 'If specified, the non-dockerhub container URL.  For Github Containers specify "ghcr.io"'
     required: false
