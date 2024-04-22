@@ -6,14 +6,14 @@ name: Package and sign RPM
 description: Package and sign an RPM for the specified distribution.
 
 inputs:
-  #required inputs
+  # required inputs
   path:
     description: 'The path to the directory containing all the files needed to build the RPM.'
     required: true
   spec:
     description: 'The spec file to build.  The spec file must be located in the path.'
     required: true
-  #optional inputs
+  # optional inputs
   artifacts-token:
     description: 'The token needed to fetch artifacts from private github repositories.'
     required: false
