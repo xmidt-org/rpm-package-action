@@ -120,7 +120,7 @@ Beyond that you can use any image you want provided Github is able to download i
 
 ## Contribute
 
-See [this file](CONTRIBUTING.md) for details.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## License
 
