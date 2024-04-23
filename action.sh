@@ -109,6 +109,10 @@ usage() {
 # Fail on error
 set -e
 
+echo "pwd" $(pwd)
+
+ls -Rrl
+
 # Validate required are present
 if [[ -z "$GITHUB_WORKSPACE"   || \
       -z "$GITHUB_ACTION_PATH" || \
