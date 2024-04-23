@@ -110,13 +110,9 @@ usage() {
 set -e
 
 #begin delete-this-debug-code-block
-
 set -x 
-
 echo "pwd" $(pwd)
-
 ls -Rrl
-
 
 echo "GITHUB_WORKSPACE" $GITHUB_WORKSPACE
 if [[ -z "$GITHUB_WORKSPACE" ]]; then  

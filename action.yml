@@ -75,7 +75,7 @@ runs:
         INPUTS_OUTPUT_DIR="${{ inputs.output-dir }}" \
         INPUTS_PATH="${{ inputs.path }}" \
         INPUTS_SPEC="${{ inputs.spec }}" \
-        INPUTS_TARGET_PROCESSOR_ARCH="${{ inputs.target-processor-arch }}"
+        INPUTS_TARGET_PROCESSOR_ARCH="${{ inputs.target-processor-arch }}" \
         ${{ github.action_path }}/action.sh
 
 branding:
