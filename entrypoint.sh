@@ -5,6 +5,10 @@
 # Fail on error
 set -e
 
+echo "pwd" $(pwd)
+
+ls -Rrl
+
 # Set up the rpm development tree.
 rpmdev-setuptree
 
