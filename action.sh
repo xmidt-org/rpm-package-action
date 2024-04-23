@@ -108,11 +108,86 @@ usage() {
 
 # Fail on error
 set -e
+
+#begin delete-this-debug-code-block
+
 set -x 
 
 echo "pwd" $(pwd)
 
 ls -Rrl
+
+
+echo "GITHUB_WORKSPACE" $GITHUB_WORKSPACE
+if [[ -z "$GITHUB_WORKSPACE" ]]; then  
+    echo "GITHUB_WORKSPACE tests empty"
+fi
+
+
+echo "GITHUB_ACTION_PATH" $GITHUB_ACTION_PATH
+if [[ -z "$GITHUB_ACTION_PATH" ]]; then  
+    echo "GITHUB_ACTION_PATH tests empty"
+fi
+
+echo "INPUTS_PATH" $INPUTS_PATH
+if [[ -z "$INPUTS_PATH" ]]; then  
+    echo "INPUTS_PATH tests empty"
+fi
+
+echo "INPUTS_SPEC" $INPUTS_SPEC
+if [[ -z "$INPUTS_SPEC" ]]; then  
+    echo "INPUTS_SPEC tests empty"
+fi
+
+echo "INPUTS_DISTRO" $INPUTS_DISTRO
+if [[ -z "$INPUTS_DISTRO" ]]; then  
+    echo "INPUTS_DISTRO tests empty"
+fi
+
+
+echo "INPUTS_DISTRO" $INPUTS_OUTPUT_DIR
+if [[ -z "$INPUTS_OUTPUT_DIR" ]]; then  
+    echo "INPUTS_OUTPUT_DIR tests empty"
+fi
+
+#end delete-this-debug-code-block
+
+
+# Validate required are present
+if [[ -z "$GITHUB_WORKSPACE"   || \
+      -z "$GITHUB_ACTION_PATH" || \
+      -z "$INPUTS_PATH"        || \
+      -z "$INPUTS_SPEC"        || \
+      -z "$INPUTS_DISTRO"      || \
+      -z "$INPUTS_OUTPUT_DIR" ]]; then
+    usage
+    exit 1
+fi
+
+# Validate required are present
+if [[ -z "$GITHUB_WORKSPACE"   || \
+      -z "$GITHUB_ACTION_PATH" || \
+      -z "$INPUTS_PATH"        || \
+      -z "$INPUTS_SPEC"        || \
+      -z "$INPUTS_DISTRO"      || \
+      -z "$INPUTS_OUTPUT_DIR" ]]; then
+    usage
+    exit 1
+fi
+
+# Validate required are present
+if [[ -z "$GITHUB_WORKSPACE"   || \
+      -z "$GITHUB_ACTION_PATH" || \
+      -z "$INPUTS_PATH"        || \
+      -z "$INPUTS_SPEC"        || \
+      -z "$INPUTS_DISTRO"      || \
+      -z "$INPUTS_OUTPUT_DIR" ]]; then
+    usage
+    exit 1
+fi
+
+
+
 
 # Validate required are present
 if [[ -z "$GITHUB_WORKSPACE"   || \
