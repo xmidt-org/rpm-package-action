@@ -108,6 +108,7 @@ usage() {
 
 # Fail on error
 set -e
+set -x 
 
 echo "pwd" $(pwd)
 
