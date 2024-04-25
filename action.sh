@@ -211,6 +211,8 @@ docker build -t $docker_name -f $dockerfile "$GITHUB_WORKSPACE"
 
 echo -e "${CYAN}-- Running docker ----------------${NORMAL}"
 
+echo "trying to mount GITHUB_WORKSPACE/INPUTS_PATH:"$GITHUB_WORKSPACE/$INPUTS_PATH
+
 # Run the docker image and make the rpm
 docker run --name thing \
     --workdir $GITHUB_WORKSPACE \
