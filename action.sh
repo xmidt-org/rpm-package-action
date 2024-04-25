@@ -197,6 +197,12 @@ fi
 
 echo -e "${CYAN}-- Building the docker image -----${NORMAL}"
 # Build the docker image
+
+ls -ltrah
+pwd
+echo GITHUB_WORKSPACE $GITHUB_WORKSPACE
+ls -Rrlrah
+
 docker build -t $docker_name -f $dockerfile "$GITHUB_ACTION_PATH"
 
 echo -e "${CYAN}-- Running docker ----------------${NORMAL}"
