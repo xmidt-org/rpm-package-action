@@ -227,5 +227,5 @@ docker run --name thing \
     -e INPUTS_BUILD_HOST="$INPUTS_BUILD_HOST" \
     -e INPUTS_ARTIFACTS_TOKEN="$INPUTS_ARTIFACTS_TOKEN" \
     -e INPUTS_TARGET_PROCESSOR_ARCH="$INPUTS_TARGET_PROCESSOR_ARCH" \
-    -v "$INPUTS_PATH:/mnt/repo" \
+    -v "$GITHUB_WORKSPACE/$INPUTS_PATH":/mnt/repo" \
     $docker_name
