@@ -203,7 +203,11 @@ echo GITHUB_WORKSPACE $GITHUB_WORKSPACE
 echo GITHUB_ACTION_PATH $GITHUB_ACTION_PATH
 ls -Rrlrah
 
-docker build -t $docker_name -f $dockerfile "$GITHUB_ACTION_PATH"
+#docker build -t $docker_name -f $dockerfile "$GITHUB_ACTION_PATH"
+
+#to add random things to override the entrypoint of the docker image, use workspace vs. action path 
+docker build -t $docker_name -f $dockerfile "$GITHUB_WORKSPACE"
+
 
 echo -e "${CYAN}-- Running docker ----------------${NORMAL}"
 
