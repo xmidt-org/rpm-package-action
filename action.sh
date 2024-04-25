@@ -198,9 +198,9 @@ fi
 echo -e "${CYAN}-- Building the docker image -----${NORMAL}"
 # Build the docker image
 
-ls -ltrah
-pwd
+echo "pwd" pwd
 echo GITHUB_WORKSPACE $GITHUB_WORKSPACE
+echo GITHUB_ACTION_PATH $GITHUB_ACTION_PATH
 ls -Rrlrah
 
 docker build -t $docker_name -f $dockerfile "$GITHUB_ACTION_PATH"
