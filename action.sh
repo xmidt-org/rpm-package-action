@@ -211,7 +211,9 @@ docker build -t $docker_name -f $dockerfile "$GITHUB_WORKSPACE"
 
 echo -e "${CYAN}-- Running docker ----------------${NORMAL}"
 
-echo "trying to mount GITHUB_WORKSPACE/INPUTS_PATH:"$GITHUB_WORKSPACE/$INPUTS_PATH
+echo "trying to mount GITHUB_WORKSPACE:"$GITHUB_WORKSPACE
+echo "trying to mount INPUTS_PATH:"$INPUTS_PATH
+
 
 # Run the docker image and make the rpm
 docker run --name thing \
@@ -225,5 +227,5 @@ docker run --name thing \
     -e INPUTS_BUILD_HOST="$INPUTS_BUILD_HOST" \
     -e INPUTS_ARTIFACTS_TOKEN="$INPUTS_ARTIFACTS_TOKEN" \
     -e INPUTS_TARGET_PROCESSOR_ARCH="$INPUTS_TARGET_PROCESSOR_ARCH" \
-    -v "$GITHUB_WORKSPACE/$INPUTS_PATH:/mnt/repo" \
+    -v $INPUTS_PATH:/mnt/repo" \
     $docker_name
