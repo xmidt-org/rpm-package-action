@@ -6,14 +6,14 @@ name: Package and sign RPM
 description: Package and sign an RPM for the specified distribution.
 
 inputs:
-  #required inputs
+  # required inputs
   path:
     description: 'The path to the directory containing all the files needed to build the RPM.'
     required: true
   spec:
     description: 'The spec file to build.  The spec file must be located in the path.'
     required: true
-  #optional inputs
+  # optional inputs
   artifacts-token:
     description: 'The token needed to fetch artifacts from private github repositories.'
     required: false
@@ -22,6 +22,9 @@ inputs:
     required: false
   container-registry-token:
     description: 'The token to use as the password to the container registry with if present.'
+    required: false
+  container-registry-user:
+    description: 'The username to login to the container registry with if present.'
     required: false
   container-registry-url:
     description: 'If specified, the non-dockerhub container URL.  For Github Containers specify "ghcr.io"'
@@ -63,6 +66,7 @@ runs:
         INPUTS_BUILD_HOST="${{ inputs.build-host }}" \
         INPUTS_CONTAINER_REGISTRY_TOKEN="${{ inputs.container-registry-token }}" \
         INPUTS_CONTAINER_REGISTRY_URL="${{ inputs.container-registry-url }}" \
+        INPUTS_CONTAINER_REGISTRY_USER="${{ inputs.container-registry-user }}" \
         INPUTS_DOCKERFILE_PATH="${{ inputs.dockerfile-path }}" \
         INPUTS_DOCKERFILE_SLUG="${{ inputs.dockerfile-slug }}" \
         INPUTS_DOCKER_ACCESS_TOKEN="${{ inputs.dockerfile-access-token }}" \
@@ -72,7 +76,7 @@ runs:
         INPUTS_OUTPUT_DIR="${{ inputs.output-dir }}" \
         INPUTS_PATH="${{ inputs.path }}" \
         INPUTS_SPEC="${{ inputs.spec }}" \
-        INPUTS_TARGET_PROCESSOR_ARCH="${{ inputs.target-processor-arch }}"
+        INPUTS_TARGET_PROCESSOR_ARCH="${{ inputs.target-processor-arch }}" \
         ${{ github.action_path }}/action.sh
 
 branding:

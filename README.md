@@ -1,26 +1,29 @@
 # Github Action - RPM Package Action
 
-This Github Action provides a simple and flexible way to package and sign rpms
-for different platforms.
+This Github Action provides a simple and flexible way to package and sign rpms for different platforms.
 
 ## Usage
 
 ### Inputs
 
-- `path`: The path to the directory containing all the files needed to build the RPM. [**required**]
-- `spec`: The spec file to build.  The spec file must be located in the `path` above. [**required**]
-- `distro`: The distribution to build on and target, or `custom` to provide your own dockerfile.  The docker files are found in the `distros` repo and this value is the filename suffix. [**optional, default:** `custom`]
-- `output-dir`: The destination directory to place the RPM and SRPM files. [**optional, default:** `output`]
-- `build-host`: The build host to specify for inclusion into the RPM information. [**optional**]
-- `gpg-key`: The GPG key used to sign the RPM if you want to sign your RPM. [**optional, requires:** `gpg-name`]
-- `gpg-name`: The GPG key name used to sign the RPM. [**optional, requires:** `gpg-key`]
-- `dockerfile-slug`: The github owner/repo where the dockerfile can be found.  Defaults to looking in the present repo unless specified. [**optional**]
-- `dockerfile-path`: The path from the repo to the file including the filename.  [**optional, required if** `distro`**=**`custom`]
-- `dockerfile-access-token`: The access token if needed to download the dockerfile from a protected repo. [**optional**]
-- `container-registry-url`: If specified, the non-dockerhub container URL.  For Github Containers specify 'ghcr.io' [**optional**]
-- `container-registry-user`: The username to login to the container registry with if present. [**optional**]
-- `container-registry-token`: The token to use as the password to the container registry with if present. [**optional**]
-- `artifacts-token`: The token to use to download private git repos or release objects if present. [**optional**]
+| Name                       | Description                                                                                                                                       | Required? | Notes              |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------ |
+| `path`                     | The path to the directory containing all the files needed to build the RPM                                                                          | Yes |                        | 
+| `spec`                     | The spec file to build.  The spec file must be located in the `path` above                                                                          | Yes |                        |
+| `artifacts-token`          | The token to use to download private git repos or release objects if present                                                                        | No  |                        |
+| `build-host`               | The build host to specify for inclusion into the RPM information                                                                                    | No  |                        |
+| `container-registry-user`  | The username to login to the container registry with if present                                                                                     | No  |                        |
+| `container-registry-url`   | If specified, the non-dockerhub container URL.  For Github Containers specify 'ghcr.io'                                                             | No  |                        |
+| `container-registry-token` | The token to use as the password to the container registry with if present                                                                          | No  |                        |
+| `distro`                   | The distribution to build on and target, or `custom` to provide your own. Default Dockerfiles are in `~/distros`, this value is the filename suffix | No  | Default: `custom`      |   
+| `dockerfile-access-token`  | The access token if needed to download the dockerfile from a protected repo.                                                                        | No  |                        |
+| `dockerfile-path`          | The path from the repo to the file including the filename.                                                                                          | No  |                        |
+| `dockerfile-slug`          | The Github owner/repo where the dockerfile can be found.  Defaults to looking in the present repo unless specified                                  | No  |                        |
+| `gpg-key`                  | The GPG key used to sign the RPM if you want to sign your RPM                                                                                       | No  | Also Needs: `gpg-name` |
+| `gpg-name`                 | The GPG key name used to sign the RPM                                                                                                               | No  | Also Needs: `gpg-key`  |
+| `output-dir`               | The destination directory to place the RPM and SRPM files.                                                                                          | No  | Default `output`       |
+| `target-processor-arch`    | The processor arch to override using `rpmbuild`'s `--target` option.                                                                                | No  |                        |
+
 
 ### Outputs
 
@@ -106,7 +109,7 @@ COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 ```
 
-Beyond that you can use any image you want provided github is able to download it.
+Beyond that you can use any image you want provided Github is able to download it.
 
 
 ## References
@@ -117,7 +120,7 @@ Beyond that you can use any image you want provided github is able to download i
 
 ## Contribute
 
-See [this file](CONTRIBUTING.md) for details.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## License
 
