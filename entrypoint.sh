@@ -94,3 +94,6 @@ fi
 # Make the output directory and copy the output artifacts RPMS/SRPMS over.
 mkdir -p $INPUTS_OUTPUT_DIR
 find ~/rpmbuild -name *.rpm -exec cp {} /mnt/repo/$INPUTS_OUTPUT_DIR/. \;
+
+#set the permissions on the output directory and its contents to public for downstream jobs to CRUD
+chmod -R 777 $INPUTS_OUTPUT_DIR

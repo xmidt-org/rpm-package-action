@@ -49,30 +49,20 @@ usage() {
     else
         echo -e "    INPUTS_OUTPUT_DIR                (required) ${CYAN}present${NORMAL} $INPUTS_OUTPUT_DIR"
     fi
-    if [[ -z "$INPUTS_GPG_KEY" ]]; then
-        echo -e "    INPUTS_GPG_KEY                   (optional) ${YELLOW}missing${NORMAL}"
+    if [[ -z "$INPUTS_ARTIFACTS_TOKEN" ]]; then
+        echo -e "    INPUTS_ARTIFACTS_TOKEN           (optional) ${YELLOW}missing${NORMAL}"
     else
-        echo -e "    INPUTS_GPG_KEY                   (optional) ${CYAN}present${NORMAL}"
+        echo -e "    INPUTS_ARTIFACTS_TOKEN           (optional) ${CYAN}present${NORMAL}"
     fi
-    if [[ -z "$INPUTS_GPG_NAME" ]]; then
-        echo -e "    INPUTS_GPG_NAME                  (optional) ${YELLOW}missing${NORMAL}"
+    if [[ -z "$INPUTS_BUILD_HOST" ]]; then
+        echo -e "    INPUTS_BUILD_HOST                (optional) ${YELLOW}missing${NORMAL}"
     else
-        echo -e "    INPUTS_GPG_NAME                  (optional) ${CYAN}present${NORMAL}"
+        echo -e "    INPUTS_BUILD_HOST                (optional) ${CYAN}present${NORMAL} $INPUTS_BUILD_HOST"
     fi
-    if [[ -z "$INPUTS_DOCKERFILE_SLUG" ]]; then
-        echo -e "    INPUTS_DOCKERFILE_SLUG           (optional) ${YELLOW}missing${NORMAL}"
+    if [[ -z "$INPUTS_CONTAINER_REGISTRY_TOKEN" ]]; then
+        echo -e "    INPUTS_CONTAINER_REGISTRY_TOKEN  (optional) ${YELLOW}missing${NORMAL}"
     else
-        echo -e "    INPUTS_DOCKERFILE_SLUG           (optional) ${CYAN}present${NORMAL} $INPUTS_DOCKERFILE_SLUG"
-    fi
-    if [[ -z "$INPUTS_DOCKERFILE_PATH" ]]; then
-        echo -e "    INPUTS_DOCKERFILE_PATH           (optional) ${YELLOW}missing${NORMAL}"
-    else
-        echo -e "    INPUTS_DOCKERFILE_PATH           (optional) ${CYAN}present${NORMAL} $INPUTS_DOCKERFILE_PATH"
-    fi
-    if [[ -z "$INPUTS_DOCKER_ACCESS_TOKEN" ]]; then
-        echo -e "    INPUTS_DOCKER_ACCESS_TOKEN       (optional) ${YELLOW}missing${NORMAL}"
-    else
-        echo -e "    INPUTS_DOCKER_ACCESS_TOKEN       (optional) ${CYAN}present${NORMAL}"
+        echo -e "    INPUTS_CONTAINER_REGISTRY_TOKEN  (optional) ${CYAN}present${NORMAL}"
     fi
     if [[ -z "$INPUTS_CONTAINER_REGISTRY_URL" ]]; then
         echo -e "    INPUTS_CONTAINER_REGISTRY_URL    (optional) ${YELLOW}missing${NORMAL}"
@@ -84,25 +74,35 @@ usage() {
     else
         echo -e "    INPUTS_CONTAINER_REGISTRY_USER   (optional) ${CYAN}present${NORMAL} $INPUTS_CONTAINER_REGISTRY_USER"
     fi
-    if [[ -z "$INPUTS_CONTAINER_REGISTRY_TOKEN" ]]; then
-        echo -e "    INPUTS_CONTAINER_REGISTRY_TOKEN  (optional) ${YELLOW}missing${NORMAL}"
+    if [[ -z "$INPUTS_DOCKERFILE_PATH" ]]; then
+        echo -e "    INPUTS_DOCKERFILE_PATH           (optional) ${YELLOW}missing${NORMAL}"
     else
-        echo -e "    INPUTS_CONTAINER_REGISTRY_TOKEN  (optional) ${CYAN}present${NORMAL}"
+        echo -e "    INPUTS_DOCKERFILE_PATH           (optional) ${CYAN}present${NORMAL} $INPUTS_DOCKERFILE_PATH"
     fi
-    if [[ -z "$INPUTS_BUILD_HOST" ]]; then
-        echo -e "    INPUTS_BUILD_HOST                (optional) ${YELLOW}missing${NORMAL}"
+    if [[ -z "$INPUTS_DOCKERFILE_SLUG" ]]; then
+        echo -e "    INPUTS_DOCKERFILE_SLUG           (optional) ${YELLOW}missing${NORMAL}"
     else
-        echo -e "    INPUTS_BUILD_HOST                (optional) ${CYAN}present${NORMAL} $INPUTS_BUILD_HOST"
+        echo -e "    INPUTS_DOCKERFILE_SLUG           (optional) ${CYAN}present${NORMAL} $INPUTS_DOCKERFILE_SLUG"
+    fi
+    if [[ -z "$INPUTS_DOCKER_ACCESS_TOKEN" ]]; then
+        echo -e "    INPUTS_DOCKER_ACCESS_TOKEN       (optional) ${YELLOW}missing${NORMAL}"
+    else
+        echo -e "    INPUTS_DOCKER_ACCESS_TOKEN       (optional) ${CYAN}present${NORMAL}"
+    fi
+    if [[ -z "$INPUTS_GPG_KEY" ]]; then
+        echo -e "    INPUTS_GPG_KEY                   (optional) ${YELLOW}missing${NORMAL}"
+    else
+        echo -e "    INPUTS_GPG_KEY                   (optional) ${CYAN}present${NORMAL}"
+    fi
+    if [[ -z "$INPUTS_GPG_NAME" ]]; then
+        echo -e "    INPUTS_GPG_NAME                  (optional) ${YELLOW}missing${NORMAL}"
+    else
+        echo -e "    INPUTS_GPG_NAME                  (optional) ${CYAN}present${NORMAL}"
     fi
     if [[ -z "$INPUTS_TARGET_PROCESSOR_ARCH" ]]; then
         echo -e "    INPUTS_TARGET_PROCESSOR_ARCH     (optional) ${YELLOW}missing${NORMAL}"
     else
         echo -e "    INPUTS_TARGET_PROCESSOR_ARCH     (optional) ${CYAN}present${NORMAL} $INPUTS_TARGET_PROCESSOR_ARCH"
-    fi
-    if [[ -z "$INPUTS_ARTIFACTS_TOKEN" ]]; then
-        echo -e "    INPUTS_ARTIFACTS_TOKEN           (optional) ${YELLOW}missing${NORMAL}"
-    else
-        echo -e "    INPUTS_ARTIFACTS_TOKEN           (optional) ${CYAN}present${NORMAL}"
     fi
 }
 
@@ -213,5 +213,5 @@ docker run --name thing \
     -e INPUTS_BUILD_HOST="$INPUTS_BUILD_HOST" \
     -e INPUTS_ARTIFACTS_TOKEN="$INPUTS_ARTIFACTS_TOKEN" \
     -e INPUTS_TARGET_PROCESSOR_ARCH="$INPUTS_TARGET_PROCESSOR_ARCH" \
-    -v "$GITHUB_WORKSPACE/$INPUTS_PATH:/mnt/repo" \
+    -v "${GITHUB_WORKSPACE}/${INPUTS_PATH}/:/mnt/repo" \
     $docker_name
