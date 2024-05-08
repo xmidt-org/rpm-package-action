@@ -96,4 +96,4 @@ mkdir -p $INPUTS_OUTPUT_DIR
 find ~/rpmbuild -name *.rpm -exec cp {} /mnt/repo/$INPUTS_OUTPUT_DIR/. \;
 
 #set the permissions on the output directory and its contents to public for downstream jobs to CRUD
-chmod -R 666 $INPUTS_OUTPUT_DIR
+chmod -R 777 $INPUTS_OUTPUT_DIR
