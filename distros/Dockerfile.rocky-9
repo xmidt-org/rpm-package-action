@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2022 Comcast Cable Communications Management, LLC
+# SPDX-License-Identifier: Apache-2.0
+FROM rockylinux/rockylinux:9
+
+# Install the minimal packages to do the job.
+RUN    dnf install -y \
+                   rocky-repos \
+                   'dnf-command(config-manager)' \
+                   dnf-plugins-core \
+                   epel-release \
+    && dnf config-manager -y --set-enabled crb \
+    && dnf install -y \
+                   coreutils-single \
+                   git \
+                   glibc-static \
+                   rpm-build \
+                   rpm-sign \
+                   rpmdevtools \
+                   systemd \
+                   systemd-rpm-macros \
+                   systemd-units \
+                   which \
+                   yum-utils
+
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
