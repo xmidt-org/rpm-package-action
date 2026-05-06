@@ -1,0 +1,43 @@
+# SPDX-FileCopyrightText: 2026 Comcast Cable Communications Management, LLC
+# SPDX-License-Identifier: Apache-2.0
+
+---
+name: Test distros
+
+on: [push, pull_request]  # yamllint disable-line rule:truthy
+
+permissions:
+  contents: read
+
+jobs:
+  build-rpm:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        distro: [rocky-8, rocky-9, rocky-10]
+    name: build-rpm (${{ matrix.distro }})
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build RPM via the action
+        uses: ./
+        with:
+          path: tests/fixtures/hello
+          spec: hello.spec
+          distro: ${{ matrix.distro }}
+          output-dir: out
+
+      - name: Verify an RPM was produced
+        run: |
+          out_dir=tests/fixtures/hello/out
+          ls -la "$out_dir"
+          rpm=$(find "$out_dir" -name '*.rpm' -print -quit)
+          if [ -z "$rpm" ]; then
+            echo "no .rpm produced in $out_dir" >&2
+            exit 1
+          fi
+          echo "produced: $rpm"
